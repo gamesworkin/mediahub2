@@ -55,14 +55,9 @@ function obterUrlNodoItem(idItem = null) {
 }
 
 function obterUrlBaseCanais() {
-    let urlObjeto = new URL(CONFIG.FIREBASE_URL);
-    return `${urlObjeto.origin}/canais_dinamicos.json`;
-}
+    // Substitui 'midias.json' por 'canais_dinamicos.json' na URL atual do usuário
+    return CONFIG.FIREBASE_URL.replace("midias.json", "canais_dinamicos.json");
 
-function obterUrlCanalIndividual(nodeName) {
-    let urlObjeto = new URL(CONFIG.FIREBASE_URL);
-    return `${urlObjeto.origin}/canais_dinamicos/${nodeName}.json`;
-}
 
 function aplicarCorTema(hexColor) {
     document.documentElement.style.setProperty('--theme-color', hexColor);
