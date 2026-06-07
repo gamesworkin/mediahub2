@@ -186,7 +186,15 @@ async function recarregarDadosDoBanco() {
 }
 
 async function carregarCanaisDinamicos() {
-    try { const res = await fetch(obterUrlBaseCanais()); const data = await res.json(); canaisDinamicos = data || {}; } catch (e) { console.error("Erro canais:", e); }
+    try { 
+        const res = await fetch(obterUrlBaseCanais()); 
+        if (!res.ok) { canaisDinamicos = {}; return; }
+        const data = await res.json(); 
+        canaisDinamicos = data || {}; 
+    } catch (e) { 
+        console.error("Erro canais:", e); 
+        canaisDinamicos = {}; 
+    }
 }
 
 function alimentarSeletorCategoriasCanais() {
