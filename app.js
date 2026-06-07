@@ -713,9 +713,12 @@ function setupEventListeners() {
             const catDestino = document.getElementById("channel-target-category")?.value; 
             if(!canalSelecionadoProvisorio || !catDestino) return alert("Selecione um canal e uma categoria.");
             try {
-                const payload = { channelId: canalSelecionadoProvisorio.channelId, uploadsPlaylistId: canalSelecionadoProvisorio.channelId.replace(/^UC/, "UU"), title: canalSelecionadoProvisorio.title, thumb: canalSelecionadoProvisorio.thumb };
+                                const payload = { channelId: canalSelecionadoProvisorio.channelId, uploadsPlaylistId: canalSelecionadoProvisorio.channelId.replace(/^UC/, "UU"), title: canalSelecionadoProvisorio.title, thumb: canalSelecionadoProvisorio.thumb };
                 const nodeName = btoa(unescape(encodeURIComponent(catDestino))).replace(/=/g, "");
-                await fetch(obterUrlCanalIndividual(nodeName), { method: "PUT", body: JSON.stringify(payload) });
+                
+                // Agora monta a URL correta e individualizada baseada no nó do usuário
+                let urlCanalIndividual = obterUrlBaseCanais().replace(".json", `/${nodeName}.json`);
+                await fetch(urlCanalIndividual, { method: "PUT", body: JSON.stringify(payload) });
                 alert("Canal vinculado!"); document.getElementById("channel-preview").style.display = "none"; document.getElementById('search-channel-input').value = "";
                 canalSelecionadoProvisorio = null; initApp();
             } catch(err) { alert("Erro ao salvar canal."); }
