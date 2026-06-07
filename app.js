@@ -57,7 +57,7 @@ function obterUrlNodoItem(idItem = null) {
 function obterUrlBaseCanais() {
     // Substitui 'midias.json' por 'canais_dinamicos.json' na URL atual do usuário
     return CONFIG.FIREBASE_URL.replace("midias.json", "canais_dinamicos.json");
-
+} //
 
 function aplicarCorTema(hexColor) {
     document.documentElement.style.setProperty('--theme-color', hexColor);
