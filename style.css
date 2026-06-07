@@ -343,7 +343,29 @@ button:active {
     padding: 15px;
     transition: width 0.3s, transform 0.3s;
     flex-shrink: 0;
+    
+    /* Ativa a rolagem vertical se o conteúdo transbordar */
+    overflow-y: auto; 
+    /* Define a altura máxima baseada no cabeçalho de 60px para o cálculo ficar perfeito */
+    max-height: calc(100vh - 60px); 
+    position: sticky;
+    top: 60px;
+
+    /* Remove a barra de rolagem visualmente no Chrome, Safari e Opera */
+    -webkit-overflow-scrolling: touch;
 }
+
+/* Remove a barra de rolagem visualmente no Chrome, Safari e Opera para a barra lateral */
+.sidebar-panel::-webkit-scrollbar {
+    display: none;
+}
+
+/* Remove a barra de rolagem visualmente no Firefox e IE/Edge */
+.sidebar-panel {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 
 .sidebar-panel.collapsed { width: 0; padding: 0; overflow: hidden; border: none; }
 .sidebar-search input { width: 100%; padding: 8px; background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-white); border-radius: 4px; margin-bottom: 15px; }
