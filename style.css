@@ -664,7 +664,17 @@ body.theme-claro .theme-switcher-float {
     .main-wrapper:has(.floating-player:not(.hidden)) .content-body { margin-top: calc(60px + 56.25vw + 80px) !important; }
     .main-wrapper:has(.mobile-search-container:not(.hidden)):has(.floating-player:not(.hidden)) .content-body { margin-top: calc(102px + 56.25vw + 80px) !important; }
 
-    .sidebar-panel { position: fixed; top: 60px; left: 0; height: calc(100vh - 60px); z-index: 90; transform: translateX(-100%); }
+        .sidebar-panel { 
+        position: fixed; 
+        top: 60px; 
+        left: 0; 
+        height: calc(100vh - 60px); 
+        max-height: calc(100vh - 60px); /* Garante o limite no mobile */
+        z-index: 90; 
+        transform: translateX(-100%); 
+        overflow-y: auto; /* Mantém a rolagem ativa no mobile */
+    }
+
     .sidebar-panel.open { transform: translateX(0); width: 260px; }
     
     .split-manage-layout { flex-direction: column !important; overflow-y: auto !important; gap: 25px !important; }
