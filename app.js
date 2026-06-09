@@ -623,7 +623,24 @@ async function empurrarBancoIntegralParaServidor() {
 
 async function deletarMidiaUnica(indexNoBanco) { try { database.splice(indexNoBanco, 1); await empurrarBancoIntegralParaServidor(); await recarregarDadosDoBanco(); renderCrudManager(); } catch(e){} }
 async function deletarSubcategoria(cat, sub) { try { database = database.filter(item => !(item.categoria === cat && item.subcategoria === sub)); await empurrarBancoIntegralParaServidor(); await recarregarDadosDoBanco(); renderCrudManager(); } catch(e){} }
-async function deletarCategoriaCompleta(cat) { try { database = database.filter(item => item.categoria !== cat); await empurrarBancoIntegralParaServidor(); await fetch(obterUrlCanalIndividual(btoa(unescape(encodeURIComponent(cat))).replace(/=/g, "")), { method: 'DELETE' }); currentView = 'categories'; selectedCategory = ''; selectedSubcategory = ''; await recarregarDadosDoBanco(); renderCrudManager(); } catch(e){} }
+async function deletarCategoriaCompleta(cat) { 
+    try { 
+        database = database.filter(item => item.categoria !== cat); 
+        await empurrarBancoIntegralParaServidor(); 
+        
+        // CORREÇÃO: Monta a URL do nó do canal usando a função que já existe no seu código
+        const nodeName = btoa(unescape(encodeURIComponent(cat))).replace(/=/g, "");
+        let urlCanalIndividual = obterUrlBaseCanais().replace(".json", `/${nodeName}.json`);
+        
+        await fetch(urlCanalIndividual, { method: 'DELETE' }); 
+        
+        currentView = 'categories'; 
+        selectedCategory = ''; 
+        selectedSubcategory = ''; 
+        await recarregarDadosDoBanco(); 
+        renderCrudManager(); 
+    } catch(e){ console.error("Erro ao deletar categoria completa:", e); } 
+}
 async function renomearCategoriaCompleta(antiga, nova) { try { database.forEach(item => { if(item.categoria === antiga) item.categoria = nova; }); await empurrarBancoIntegralParaServidor(); const oldNodeName = btoa(unescape(encodeURIComponent(antiga))).replace(/=/g, ""); if (canaisDinamicos[oldNodeName]) { const newNodeName = btoa(unescape(encodeURIComponent(nova))).replace(/=/g, ""); await fetch(obterUrlCanalIndividual(newNodeName), { method: "PUT", body: JSON.stringify(canaisDinamicos[oldNodeName]) }); await fetch(obterUrlCanalIndividual(oldNodeName), { method: "DELETE" }); } await recarregarDadosDoBanco(); renderCrudManager(); } catch(e){} }
 async function renomearSubcategoriaCompleta(cat, antigaSub, novaSub) { try { database.forEach(item => { if(item.categoria === cat && item.subcategoria === antigaSub) item.subcategoria = novaSub; }); await empurrarBancoIntegralParaServidor(); await recarregarDadosDoBanco(); renderCrudManager(); } catch(e){} }
 
