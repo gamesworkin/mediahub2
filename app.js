@@ -144,7 +144,7 @@ function handleLogin() {
     firebase.auth().signInWithEmailAndPassword(inputEmail, inputPass)
         .catch((error) => {
             alert("Erro na Autenticação: " + error.message);
-            btnLogin.innerText = "Entrar no Painel"; btnLogin.disabled = false;
+            btnLogin.innerText = "Entrar"; btnLogin.disabled = false;
         });
 }
 
@@ -161,7 +161,7 @@ function limparInterfaceLocal() {
     if (document.getElementById('login-user')) document.getElementById('login-user').value = "";
     if (document.getElementById('login-pass')) document.getElementById('login-pass').value = "";
     if (document.getElementById('btn-login')) {
-        document.getElementById('btn-login').innerText = "Entrar no Painel";
+        document.getElementById('btn-login').innerText = "Entrar";
         document.getElementById('btn-login').disabled = false;
     }
     if (document.getElementById('app-container')) document.getElementById('app-container').classList.add('hidden');
